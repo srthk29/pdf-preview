@@ -4,10 +4,14 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/davidbyttow/govips/v2/vips"
 	"github.com/srthk29/pdf-preview/internal/api"
 )
 
 func main() {
+	vips.Startup(nil)
+	defer vips.Shutdown()
+
 	mux := http.NewServeMux()
 	mux.HandleFunc("/pdfpreview", api.PdfPreview)
 
