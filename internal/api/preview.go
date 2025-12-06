@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"io"
 	"log"
 	"net/http"
@@ -26,6 +27,9 @@ func init() {
 }
 
 func PdfPreview(w http.ResponseWriter, r *http.Request) {
+	_, cancel := context.WithCancel(r.Context())
+	defer cancel()
+
 	previewBytes, err := previewImage(r.Body)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
